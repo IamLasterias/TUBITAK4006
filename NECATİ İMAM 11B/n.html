@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Haritası ve Hayvanlar</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .map-container {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+        .map-container img {
+            width: 1000px;
+        }
+        .region {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        .popup {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid black;
+            padding: 10px;
+            width: 700px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .popup img {
+            width: 200px;
+            height: auto;
+            margin: 10px;
+        }
+        .popup p {
+            margin: 0;
+        }
+        .animal-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .animal-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .animal-item img {
+            margin-bottom: 10px;
+        }
+        .animal-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid black;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            width: 500px;
+        }
+        .animal-popup img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Türkiye Haritası ve Bölgelere Göre Hayvanlar</h2>
+
+<div class="map-container">
+    <img src="trbolge.png" alt="Türkiye Haritası">
+
+    <!-- Marmara Bölgesi -->
+    <div class="region" style="top: 120px; left: 130px;" onclick="showPopup('marmara')"></div>
+    <div id="marmara" class="popup">
+        <h4>Marmara Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('leylek')">
+                <img src="leylek.png" alt="Leylek">
+                <p>Leylek</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('karaca')">
+                <img src="karaca.jpeg" alt="Karaca">
+                <p>Karaca</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('tilki')">
+                <img src="tilki.jpeg" alt="Tilki">
+                <p>Tilki</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ege Bölgesi -->
+    <div class="region" style="top: 210px; left: 180px;" onclick="showPopup('ege')"></div>
+    <div id="ege" class="popup">
+        <h4>Ege Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('denizlihorozu')">
+                <img src="denizlihorozu.jpeg" alt="Denizli Horozu">
+                <p>Denizli Horozu</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('yabandomuzu')">
+                <img src="yabandomuzu.jpeg" alt="Yaban Domuzu">
+                <p>Yaban Domuzu</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('sakakusu')">
+                <img src="sakakusu.jpeg" alt="Saka Kuşu">
+                <p>Saka Kuşu</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Akdeniz Bölgesi -->
+    <div class="region" style="top: 360px; left: 380px;" onclick="showPopup('akdeniz')"></div>
+    <div id="akdeniz" class="popup">
+        <h4>Akdeniz Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('akdenizfoku')">
+                <img src="akdenizfoku.jpeg" alt="Akdeniz Foku">
+                <p>Akdeniz Foku</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('alageyik')">
+                <img src="alageyik.jpeg" alt="Alageyik">
+                <p>Alageyik</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('sahin')">
+                <img src="sahin.png" alt="Şahin">
+                <p>Şahin</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- İç Anadolu Bölgesi -->
+    <div class="region" style="top: 200px; left: 390px;" onclick="showPopup('icanadolu')"></div>
+    <div id="icanadolu" class="popup">
+        <h4>İç Anadolu Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('anadoluparsi')">
+                <img src="anadoluparsi.jpeg" alt="Anadolu Parsı">
+                <p>Anadolu Parsı</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('ankarakecisi')">
+                <img src="ankarakecisi.jpeg" alt="Ankara Keçisi">
+                <p>Ankara Keçisi</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('toy')">
+                <img src="toy.png" alt="Toy Kuşu">
+                <p>Toy Kuşu</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Karadeniz Bölgesi -->
+    <div class="region" style="top: 100px; left: 650px;" onclick="showPopup('karadeniz')"></div>
+    <div id="karadeniz" class="popup">
+        <h4>Karadeniz Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('bozayi')">
+                <img src="bozayi.jpeg" alt="Boz Ayı">
+                <p>Boz Ayı</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('vasak')">
+                <img src="vasak.png" alt="Vaşak">
+                <p>Vaşak</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('telliturna')">
+                <img src="telliturna.png" alt="Telli Turna">
+                <p>Telli Turna</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doğu Anadolu Bölgesi -->
+    <div class="region" style="top: 200px; left: 780px;" onclick="showPopup('doguanadolu')"></div>
+    <div id="doguanadolu" class="popup">
+        <h4>Doğu Anadolu Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('urkekligi')">
+                <img src="urkekligi.png" alt="Ur Kekliği">
+                <p>Ur Kekliği</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('karakulak')">
+                <img src="karakulak.png" alt="Karakulak">
+                <p>Karakulak</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('puhu')">
+                <img src="puhu.png" alt="Puhu Kuşu">
+                <p>Puhu Kuşu</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Güneydoğu Anadolu Bölgesi -->
+    <div class="region" style="top: 310px; left: 700px;" onclick="showPopup('guneydogu')"></div>
+    <div id="guneydogu" class="popup">
+        <h4>Güneydoğu Anadolu Bölgesi</h4>
+        <div class="animal-list">
+            <div class="animal-item" onclick="showAnimalPopup('kelaynak')">
+                <img src="kelaynak.png" alt="Kelaynak">
+                <p>Kelaynak</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('atmaca')">
+                <img src="atmaca.png" alt="Atmaca">
+                <p>Atmaca</p>
+            </div>
+            <div class="animal-item" onclick="showAnimalPopup('firatkaplumbagasi')">
+                <img src="firatkaplumbagasi.png" alt="Fırat Kaplumbağası">
+                <p>Fırat Kaplumbağası</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hayvan Detay Popup'ları -->
+<div id="leylek" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="leylek.png" alt="Leylek">
+    <p>Leyle, uzun bacaklı ve büyük kanatlı bir göçmen kuştur. 100-115 cm boyunda, 155-215 cm kanat açıklığına sahiptir. Türkiye’de sulak alanlar, tarım arazileri ve köy yakınlarında yaşar. Kurbağa, balık, böcek ve küçük kemirgenlerle beslenir. İlkbaharda gelir, sonbaharda Afrika’ya göç eder. Yuvalarını genellikle direkler ve çatılara yapar</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="karaca" class="animal-popup">
+    <h4>Karaca</h4>
+    <img src="karaca.jpeg" alt="Karaca">
+    <p>Karaca , Türkiye’de ormanlık ve dağlık bölgelerde yaşayan küçük bir geyik türüdür. 95-135 cm boyunda, 15-35 kg ağırlığındadır. Yazın kızıl kahverengi, kışın gri-kahverengi postu vardır. Erkeklerde küçük ve dik boynuzlar bulunur. Otlar, yapraklar ve meyvelerle beslenir. Yalnız yaşamayı sever ve çok çeviktir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="tilki" class="animal-popup">
+    <h4>Tilki</h4>
+    <img src="tilki.jpeg" alt="Tilki">
+    <p>Türkiye'deki tilkiler, genellikle kızıl tilki türündendir. Orta büyüklükte, kırmızımsı kahverengi kürkleri, beyaz karın ve siyah uçlu kuyrukları vardır. Gececil, zeki ve kurnaz hayvanlardır. Etçil olmalarına rağmen meyve, böcek ve bitki de yerler. Ormanlar, çalılıklar ve tarım alanları gibi çeşitli habitatlarda yaşarlar.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="akdenizfoku" class="animal-popup">
+    <h4>Akdeniz Foku</h4>
+    <img src="akdenizfoku.jpeg" alt="Akdeniz Foku">
+    <p>Akdeniz foku, nesli tehlike altında olan nadir deniz memelilerindendir. Türkiye’de özellikle Ege ve Akdeniz kıyılarında, Mersin, Antalya, Muğla ve İzmir gibi bölgelerde yaşar. 2-3 metre boyunda ve 250-400 kg ağırlığında olan bu foklar, balık, ahtapot ve mürekkep balığı ile beslenir. Genellikle kıyı mağaralarında barınır ve sonbahar aylarında doğum yapar. Koruma altındaki bu tür, yasadışı avcılık, kıyı tahribatı ve deniz kirliliği nedeniyle tehdit altındadır.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="alageyik" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="alageyik.jpeg" alt="Alageyik">
+    <p>Alageyik, orta büyüklükte bir geyik türüdür. Türkiye’de özellikle Antalya’daki Düzlerçamı Yaban Hayatı Geliştirme Sahası’nda korunmaktadır. Erkeklerinde büyük ve yayvan boynuzlar bulunur. Kahverengi postları yazın beyaz beneklidir, kışın ise koyu kahverengiye döner. Genellikle ormanlık ve açık alanlarda yaşar, otlar, yapraklar ve meyvelerle beslenir. Nesli tehlike altındadır ve koruma altına alınmıştır.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="sahin" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="sahin.png" alt="Şahin">
+    <p>Şahin, Türkiye’de yaygın görülen bir yırtıcı kuştur. 50-60 cm boyunda, 110-140 cm kanat açıklığına sahiptir. Küçük memeliler, kuşlar ve sürüngenlerle beslenir. Ormanlık ve açık alanlarda yaşar. Keskin pençeleri ve güçlü gagasıyla avlarını kolayca yakalar.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="yabandomuzu" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="yabandomuzu.jpeg" alt="Yaban Domuzu">
+    <p>Ormanlık, bataklık ve tarım alanlarında yaşar. 90-200 kg ağırlığında olabilir. Güçlü çenesi ve sivri dişleriyle dikkat çeker. Ot, kök, meyve ve küçük hayvanlarla beslenir. Genellikle gece aktiftir ve sürü halinde dolaşır. Tarım alanlarına zarar verebildiği için bazı bölgelerde avlanmasına izin verilir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="toy" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="toy.png" alt="Toy Kuşu">
+    <p>Boyu 1 metreyi geçebilen, uzun bacaklı ve ince yapılı bir kuştur. Türkiye’de özellikle Çukurova, Konya Ovası gibi sulak alanlarda görülür. Kışı geçirmek için Afrika’ya göç eder. Genellikle tarım alanlarında, bataklık ve sulak bölgelerde yaşar. Otlar, tohumlar, böcekler ve küçük omurgasızlarla beslenir. Uzun ötüşleriyle tanınır ve sosyal yaşamları oldukça belirgindir, sürüler halinde yaşarlar.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="denizlihorozu" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="denizlihorozu.jpeg" alt="Denizli Horozu">
+    <p>Türkiye’nin yerli tavuk ırklarından biridir ve özellikle uzun ötüşüyle tanınır. Siyah, kırmızı ve gri tonlarında tüyleri bulunur. Ortalama 3-3,5 kg ağırlığındadır. Dayanıklı yapısı ve gösterişli duruşuyla bilinir. Genellikle süs ve yarışmalar için beslenir, ancak yumurta ve et verimi de iyidir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="sakakusu" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="sakakusu.jpeg" alt="Saka Kuşu">
+    <p>Küçük, renkli ve ötücü bir kuştur. 12-14 cm boyunda, parlak kırmızı yüzü ve siyah-sarı desenli kanatları vardır. Genellikle açık alanlar, parklar ve bahçelerde yaşar. Tohumlarla beslenir, özellikle dikenli bitkileri tercih eder. Güçlü ötüşüyle bilinir ve ötüm yeteneği nedeniyle kafes kuşu olarak da beslenir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="ankarakecisi" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="ankarakecisi.jpeg" alt="Ankara Keçisi">
+    <p>Türkiye'ye özgü bir keçi ırkıdır ve özellikle Ankara ve çevresinde yetiştirilir. Ortalama 45-60 kg ağırlığındadır. Yüksek kaliteli yünleriyle ünlüdür, özellikle mohair adı verilen yün, tekstil endüstrisinde çok değerlidir. Dayanıklı ve güçlü yapıları vardır, dağlık ve engebeli alanlarda rahatça yaşayabilirler. Hem et hem de yün üretimi için yetiştirilir ve büyük ekonomik öneme sahiptir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="anadoluparsi" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="anadoluparsi.jpeg" alt="Anadolu Parsı">
+    <p>Türkiye’ye özgü bir leopar alt türüdür ve özellikle Anadolu Bölgesi’nde yaşamaktadır. Boyu 1.2-1.5 metre, ağırlığı ise 30-70 kg arasında değişir. Ormanlık alanlarda, kayalık bölgelerde ve dağlarda yaşar. Çiftleşme mevsimi dışında yalnız bir yaşam sürer ve etoburdur, özellikle koyun, keçi ve küçük memelilerle beslenir. Nesli tükenme tehlikesi altındadır ve koruma altına alınmıştır.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="bozayi" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="bozayi.jpeg" alt="Boz Ayı">
+    <p>Boz ayılar, Türkiye’nin Karadeniz Bölgesi ve Toros Dağları gibi ormanlık alanlarında yaşamaktadır. Genellikle kahverengi tüyleriyle tanınan bu büyük memeliler, etçil ve otçul beslenme alışkanlıklarıyla dikkat çekerler. Kış aylarında uzun süreli uykuya yatarlar ve bu süreçte vücut sıcaklıkları düşer. Yavaş hareket etseler de büyük ve güçlü yapıları onları güçlü avcılara dönüştürür. İnsanlardan uzak durmayı tercih ederler, ancak gıda arayışı sırasında insan yerleşimlerine yakınlaşabilirler.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="vasak" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="vasak.png" alt="Vaşak">
+    <p>Vaşak, Türkiye’nin ormanlık ve dağlık bölgelerinde yaşayan bir kedi türüdür. Keskin gözleri, büyük kulakları ve tüylü bacaklarıyla dikkat çeker. Yalnızca etle beslenen vaşaklar, özellikle kuşları, tavşanları ve diğer küçük memelileri avlar. Çok iyi bir avcı olan bu yırtıcı, sessizce yaklaşarak avını yakalar. Vaşak, Türkiye’nin bazı bölgelerinde nesli tükenme tehlikesiyle karşı karşıyadır ve korunma altındadır.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="kelaynak" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="kelaynak.png" alt="Kelaynak">
+    <p>Türkiye’nin güneydoğusunda, özellikle Gaziantep çevresinde bulunan kelaynak kuşu, tükenme tehlikesiyle karşı karşıya olan bir türdür. Kendine özgü büyük gagaları ve çıplak kafaları ile dikkat çeker. Uzun bacaklarıyla bilinen bu kuşlar, topluluk halinde yaşar ve açık alanlarda avlanır. Kelaynak, uçuş sırasında sıklıkla sürü halinde hareket eder. Nesli tükenme tehlikesi ile karşı karşıya olduğu için bu kuşun korunması amacıyla çeşitli projeler yürütülmektedir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="puhu" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="puhu.png" alt="Puhu Kuşu">
+    <p>Puhu, Türkiye’deki ormanlık alanlarda, dağlık bölgelerde ve açık arazilerde yaşamayı tercih eden büyük bir baykuş türüdür. Büyük boyutları, yuvarlak yüzü ve güçlü gözleri ile tanınır. Geceleri avlanır ve etobur bir beslenme düzenine sahiptir, özellikle küçük memeliler ve kuşlarla beslenir. Puhu, yüksek sesle ötmesiyle tanınır ve uçuşu oldukça sessizdir. Türkiye’de koruma altındaki türler arasında yer almaktadır.
+
+</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="telliturna" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="telliturna.png" alt="Telli Turna">
+    <p>Telli turna, uzun bacakları ve boynu ile tanınan zarif bir kuştur. Genellikle sulak alanlarda, bataklıklarda ve göletlerde yaşar. Göçmen kuşlardan biri olan telli turna, kış aylarında güney bölgelere göç eder. Bu kuşlar, belirgin uzun gagaları ve uçuşlarındaki görkemli hareketlerle dikkat çeker. Türkiye’de özellikle iç bölgelerde gözlemlenebilirler. Telli turna, çoğunlukla yer yüzeyinde yaşamayı tercih eder, ancak gerektiğinde uzun mesafeleri uçabilmektedir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="urkekligi" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="urkekligi.png" alt="Ur Kekliği">
+    <p>Ur kekliği, Türkiye’nin iç bölgelerinde, özellikle Anadolu’nun step alanlarında ve çalılık bölgelerinde yaşayan bir kuştur. Diğer keklik türlerine benzer olarak, bu kuşlar yere yakın yaşar ve uçmadan önce kısa mesafelerle uçarak kaçma eğilimindedir. Uzun bacakları ve kısa kuyrukları ile tanınan ur kekliği, nadir bir tür olup, avcılık ve habitat kaybı nedeniyle popülasyonu azalmaktadır. Bu tür, özellikle orman kenarlarında ve açık alanlarda avlanırken görülür.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="atmaca" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="atmaca.png" alt="Atmaca">
+    <p>Atmaca, Türkiye’nin ormanlık alanlarında ve açık arazilerde yaşayan küçük boyutlu bir yırtıcı kuştur. Keskin gözleri ve güçlü pençeleriyle, özellikle küçük kuşları ve memelileri avlar. Hızlı hareket ederek avını yakalayan atmaca, çevikliğini ve hassasiyetini avını yakalamada kullanır. Yüksek hızla uçabilmesi, ona büyük bir avcı yeteneği kazandırır. Bu kuşlar, doğada dengelerin sağlanmasına katkı sağlayan önemli avcılardır.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="karakulak" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="karakulak.png" alt="Karakulak">
+    <p>Karakulak, Türkiye’nin bazı dağlık ve ormanlık bölgelerinde, özellikle güneydoğuda bulunan, keskin gözleri ve büyük kulaklarıyla tanınan bir kedigildir. Orta büyüklükteki bu yırtıcı, büyük çatal biçimindeki kulaklarıyla tanınır. Gececi bir avcı olan karakulak, özellikle tavşanlar, kuşlar ve diğer küçük memelilerle beslenir. Bu türün korunması için çeşitli projeler yürütülmektedir, çünkü karakulak da nesli tükenme riski altında olan türlerden biridir.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+
+<div id="firatkaplumbagasi" class="animal-popup">
+    <h4>Leylek</h4>
+    <img src="firatkaplumbagasi.png" alt="Fırat Kaplumbağası">
+    <p>ırat kaplumbağası, adını Fırat Nehri’nden alan ve Türkiye’nin güneydoğusunda yaşayan endemik bir türdür. Su kaplumbağası olan bu tür, özellikle nehirlerde ve göletlerde yaşamayı tercih eder. Genellikle yavaş hareket eder ve suda yaşamaya oldukça uygundur. Suyun içinde uzun süre kalabilen bu kaplumbağalar, aynı zamanda kara üzerinde de vakit geçirebilirler. Fırat kaplumbağası, nesli tehlike altında olan bir türdür ve korunma çalışmaları yapılmaktadır.</p>
+    <button onclick="closeAnimalPopup()">Kapat</button>
+</div>
+<!-- Diğer hayvanlar için de aynı şekilde popup ekleyebilirsiniz -->
+
+<script>
+    function showPopup(region) {
+        document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+        document.getElementById(region).style.display = 'block';
+    }
+
+    function showAnimalPopup(animal) {
+        document.querySelectorAll('.animal-popup').forEach(popup => popup.style.display = 'none');
+        document.getElementById(animal).style.display = 'block';
+    }
+
+    function closeAnimalPopup() {
+        document.querySelectorAll('.animal-popup').forEach(popup => popup.style.display = 'none');
+    }
+</script>
+
+</body>
+</html>
